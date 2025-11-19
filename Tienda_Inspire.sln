@@ -7,15 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaInspireAppHost", "Tie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaInspireIdentity", "TiendaInspireIdentity\TiendaInspireIdentity.csproj", "{4E9714C6-3E86-4BE8-8C49-200C0CF8596C}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "TiendaInspireFront", "TiendaInspire.Front\TiendaInspireFront.esproj", "{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaInspire.ServiceDefaults", "TiendaInspire.ServiceDefaults\TiendaInspire.ServiceDefaults.csproj", "{60113DC2-B656-4FA5-9770-7C2060B56B36}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaAspire.ApiGateway", "TiendaAspire.ApiGateway\TiendaAspire.ApiGateway.csproj", "{569E5A42-2351-A253-3F91-752392CF1C4F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos", "Elementos", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
-		Directory.Packagaes.props = Directory.Packagaes.props
+		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
 Global
@@ -32,12 +30,6 @@ Global
 		{4E9714C6-3E86-4BE8-8C49-200C0CF8596C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E9714C6-3E86-4BE8-8C49-200C0CF8596C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E9714C6-3E86-4BE8-8C49-200C0CF8596C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{60113DC2-B656-4FA5-9770-7C2060B56B36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{60113DC2-B656-4FA5-9770-7C2060B56B36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60113DC2-B656-4FA5-9770-7C2060B56B36}.Release|Any CPU.ActiveCfg = Release|Any CPU

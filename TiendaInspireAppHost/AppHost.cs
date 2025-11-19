@@ -12,9 +12,9 @@ var myService = builder.AddProject<Projects.TiendaInspireIdentity>("tiendainspri
     .WaitFor(postgresdb)
     .WithReference(postgresdb);
 
-builder.AddProject<Projects.TiendaInspireFront>("webfrontend")
+//builder.AddProject<Projects.TiendaInspireFront>("webfrontend")
 //    .WaitFor(cache)
-    .WithReference(myService);
+//    .WithReference(myService);
 
 
 

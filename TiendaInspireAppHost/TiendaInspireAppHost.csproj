@@ -11,14 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.5.2" />
-    <PackageReference Include="Aspire.Hosting.AppHost" Version="13.0.0" />
-    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.0.0" />
+	<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <PackageReference Include="Aspire.Hosting.AppHost" />
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TiendaAspire.ApiGateway\TiendaAspire.ApiGateway.csproj" />
-    <ProjectReference Include="..\TiendaInspire.Front\TiendaInspireFront.esproj" />
     <ProjectReference Include="..\TiendaInspire.ServiceDefaults\TiendaInspire.ServiceDefaults.csproj" />
     <ProjectReference Include="..\TiendaInspireIdentity\TiendaInspireIdentity.csproj" />
   </ItemGroup>
