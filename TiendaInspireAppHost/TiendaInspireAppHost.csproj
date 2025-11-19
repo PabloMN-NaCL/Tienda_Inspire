@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.5.0" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>c8fb531b-789e-4bd4-b989-17fadb876f76</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.5.2" />
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="13.0.0" />
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TiendaAspire.ApiGateway\TiendaAspire.ApiGateway.csproj" />
+    <ProjectReference Include="..\TiendaInspire.Front\TiendaInspireFront.esproj" />
+    <ProjectReference Include="..\TiendaInspire.ServiceDefaults\TiendaInspire.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\TiendaInspireIdentity\TiendaInspireIdentity.csproj" />
+  </ItemGroup>
+
+</Project>

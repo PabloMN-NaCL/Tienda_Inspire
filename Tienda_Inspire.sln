@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36603.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaInspireAppHost", "TiendaInspireAppHost\TiendaInspireAppHost.csproj", "{0E80659F-3AC4-4DDB-9CBE-79D29D89E990}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaInspireIdentity", "TiendaInspireIdentity\TiendaInspireIdentity.csproj", "{4E9714C6-3E86-4BE8-8C49-200C0CF8596C}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "TiendaInspireFront", "TiendaInspire.Front\TiendaInspireFront.esproj", "{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaInspire.ServiceDefaults", "TiendaInspire.ServiceDefaults\TiendaInspire.ServiceDefaults.csproj", "{60113DC2-B656-4FA5-9770-7C2060B56B36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaAspire.ApiGateway", "TiendaAspire.ApiGateway\TiendaAspire.ApiGateway.csproj", "{569E5A42-2351-A253-3F91-752392CF1C4F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos", "Elementos", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Packagaes.props = Directory.Packagaes.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E80659F-3AC4-4DDB-9CBE-79D29D89E990}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E80659F-3AC4-4DDB-9CBE-79D29D89E990}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E80659F-3AC4-4DDB-9CBE-79D29D89E990}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E80659F-3AC4-4DDB-9CBE-79D29D89E990}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E9714C6-3E86-4BE8-8C49-200C0CF8596C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E9714C6-3E86-4BE8-8C49-200C0CF8596C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E9714C6-3E86-4BE8-8C49-200C0CF8596C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E9714C6-3E86-4BE8-8C49-200C0CF8596C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D95D3E4D-61DB-4934-EAAA-3A237DA3A954}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{60113DC2-B656-4FA5-9770-7C2060B56B36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60113DC2-B656-4FA5-9770-7C2060B56B36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60113DC2-B656-4FA5-9770-7C2060B56B36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60113DC2-B656-4FA5-9770-7C2060B56B36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{569E5A42-2351-A253-3F91-752392CF1C4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{569E5A42-2351-A253-3F91-752392CF1C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{569E5A42-2351-A253-3F91-752392CF1C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{569E5A42-2351-A253-3F91-752392CF1C4F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5E3B0240-ED75-49B7-AB16-AB799A81BFE4}
+	EndGlobalSection
+EndGlobal

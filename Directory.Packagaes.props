@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="PackageA" Version="1.0.0" />
+    <PackageVersion Include="PackageB" Version="2.0.0" />
+  </ItemGroup>
+</Project>

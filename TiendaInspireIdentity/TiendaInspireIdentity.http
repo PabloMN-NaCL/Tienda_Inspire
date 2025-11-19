@@ -1,0 +1,6 @@
+@TiendaInspireIdentity_HostAddress = http://localhost:5046
+
+GET {{TiendaInspireIdentity_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
