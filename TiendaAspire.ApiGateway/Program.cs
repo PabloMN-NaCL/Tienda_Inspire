@@ -7,8 +7,8 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 //Yarp
-//builder.Services.AddReverseProxy()
-//    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 var app = builder.Build();
 
@@ -26,6 +26,6 @@ app.MapControllers();
 
 
 //Yarp
-//app.MapReverseProxy();
+app.MapReverseProxy();
 
 app.Run();

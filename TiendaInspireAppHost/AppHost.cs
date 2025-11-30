@@ -4,8 +4,7 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 
 var database = builder.AddPostgres("postgres").WithLifetime(ContainerLifetime.Persistent);
-var postgresdb = database.AddDatabase("ServerTienda");
-
+var postgresdb = database.AddDatabase("servertienda");
 
 
 var myService = builder.AddProject<Projects.TiendaInspireIdentity>("tiendainsprireidentity")
@@ -15,11 +14,5 @@ var myService = builder.AddProject<Projects.TiendaInspireIdentity>("tiendainspri
 //builder.AddProject<Projects.TiendaInspireFront>("webfrontend")
 //    .WaitFor(cache)
 //    .WithReference(myService);
-
-
-
-builder.AddProject<Projects.TiendaAspire_ApiGateway>("tiendaaspire-apigateway");
-
-
 
 builder.Build().Run();

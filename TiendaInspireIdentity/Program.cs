@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,17 +8,18 @@ using TiendaInspireIdentity.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddControllers();
+builder.Configuration.AddUserSecrets(typeof(Program).Assembly, true);
 
 
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddEndpointsApiExplorer();
 
 
 
 //DbContext 
-builder.AddNpgsqlDbContext<ApplicationDbContext>("ServerTienda");
+builder.AddNpgsqlDbContext<ApplicationDbContext>("servertienda");
 
 // Add ASP.NET Core Identity
 //Setting of the login screen
@@ -44,7 +46,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-//Yarp
+//Yarp  TODO: Configurar Yarp en appsettings.json
 //builder.Services.AddReverseProxy()
 //    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
@@ -73,7 +75,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-app.UseSwagger();
+
+
 
 //Modo desarrollo
 // Configure the HTTP request pipeline.
@@ -114,10 +117,6 @@ app.MapDefaultEndpoints();
 
 app.MapControllers();
 
-//Minimum Api 18-11-25
-// Falta inyectar dependecnias de nuavas interfaces que se usan (TODO)
-//app.MapAuthGroup();
-//app.MapRegisterUser();
 
 //Yarp
 //app.MapReverseProxy();

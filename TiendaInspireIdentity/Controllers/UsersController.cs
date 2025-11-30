@@ -64,6 +64,8 @@ namespace TiendaInspireIdentity.Controllers
     }
 
 
+    //TODO Convertir estos modelos en modelos o DTO
+
     public record UserCreationResponse()
     {
         public required string Email { get; set; }
