@@ -1,14 +1,19 @@
+using Microsoft.AspNetCore.RateLimiting;
+using OrderFlowClase.ApiGateway.Extensions;
+using RedisRateLimiting;
+using StackExchange.Redis;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 builder.Services.AddOpenApi();
 
-//Yarp
-builder.Services.AddReverseProxy()
-    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+builder.AddRedisClient("redis");
+
+builder.Services.AddYarpReverseProxy(builder.Configuration);
 
 var app = builder.Build();
 

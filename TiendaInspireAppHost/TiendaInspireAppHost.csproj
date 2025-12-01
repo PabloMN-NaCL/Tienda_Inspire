@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TiendaInspire.ServiceDefaults\TiendaInspire.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\TiendaAspire.ApiGateway\TiendaAspire.ApiGateway.csproj" />
     <ProjectReference Include="..\TiendaInspireIdentity\TiendaInspireIdentity.csproj" />
   </ItemGroup>
 

@@ -8,13 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-	  <PackageReference Include="Microsoft.Extensions.ServiceDiscovery.Yarp" />
-	  <PackageReference Include="Yarp.ReverseProxy" />
+    <PackageReference Include="Aspire.StackExchange.Redis" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
+	<PackageReference Include="Microsoft.Extensions.ServiceDiscovery.Yarp" />
+	<PackageReference Include="Yarp.ReverseProxy" />
+	<PackageReference Include="RedisRateLimiting" />
+	<PackageReference Include="RedisRateLimiting.AspNetCore" />
+	<PackageReference Include="StackExchange.Redis" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TiendaInspire.ServiceDefaults\TiendaInspire.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

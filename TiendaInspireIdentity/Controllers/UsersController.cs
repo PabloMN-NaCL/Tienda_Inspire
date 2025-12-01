@@ -1,4 +1,7 @@
 ﻿
+using Asp.Versioning;
+using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,79 +9,54 @@ using Microsoft.AspNetCore.Mvc;
 namespace TiendaInspireIdentity.Controllers
 {
 
-    [Route("api/[controller]")]
+    [ApiVersion(1)]
     [ApiController]
-
+    [Authorize]
+    [Route("/api/v{version:apiVersion}/[controller]")]
     public class UsersController : ControllerBase
     {
 
+        private readonly IUserService _userService;
         private readonly ILogger<UsersController> _logger;
-        private readonly UserManager<IdentityUser> _userManager;
 
-
-        public UsersController(ILogger<UsersController> logger, UserManager<IdentityUser> userManager)
+        public UsersController(IUserService userService, ILogger<UsersController> logger)
         {
+            _userService = userService;
             _logger = logger;
-            _userManager = userManager;
         }
 
-        // 1. Añade [HttpPost] y 2. Cambia el tipo de retorno a Task<IActionResult>
-        [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] UserCreationRequest request) // 3. Añade [FromBody]
+
+
+        [HttpPatch("{userId}/change-password")]
+        public async Task<ActionResult<PasswordChangeResponse>> ChangePassword(
+            string userId,
+            [FromBody] PasswordChangeRequest request,
+            [FromServices] IValidator<PasswordChangeRequest> validator
+            )
         {
-            var user = new IdentityUser
+            var validation = await validator.ValidateAsync(request);
+
+            if (!validation.IsValid)
             {
-                UserName = request.Username,
-                Email = request.Email,
-            };
-
-            var result = await _userManager.CreateAsync(user, request.Password);
-
-            // Caso 2: Fallo al crear usuario (Usa BadRequest y el mensaje de error)
-            if (!result.Succeeded)
-            {
-                _logger.LogError(
-                    "User creation failed: {Errors}",
-                    string.Join(", ", result.Errors.Select(e => e.Description))
-                );
-
-                // Devuelve una respuesta 400 Bad Request con los errores
-                return BadRequest(new UserCreationResponse
-                {
-                    Email = request.Email,
-                    Message = "User creation failed",
-                    Errors = result.Errors.Select(e => e.Description).ToList() // Convertir a Lista para mayor compatibilidad
-                });
+                return BadRequest(validation.Errors);
             }
 
-            // Caso 1: Usuario creado con éxito (Usa Ok u ActionResult, que por defecto sería 200 OK)
-            _logger.LogInformation("User created successfully: {Email}", request.Email);
+            var result = await _userService.ChangePasswordAsync(userId, request.CurrentPassword, request.NewPassword);
 
-            return Ok(new UserCreationResponse
+            var response = new PasswordChangeResponse
             {
-                Email = request.Email,
-                Message = "User created successfully",
-                Errors = new List<string>() // Lista vacía para indicar que no hay errores
-            });
+                Success = result
+            };
+
+            if (!result)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+
         }
+
     }
-
-
-    //TODO Convertir estos modelos en modelos o DTO
-
-    public record UserCreationResponse()
-    {
-        public required string Email { get; set; }
-        public required string Message { get; set; }
-        public IEnumerable<string>? Errors { get; set; }
-
-
-    };
-    public class UserCreationRequest
-    {
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-    };
 }
 

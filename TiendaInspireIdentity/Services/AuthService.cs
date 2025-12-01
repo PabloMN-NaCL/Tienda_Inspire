@@ -9,7 +9,7 @@ using System.Text;
 
 namespace TiendaInspireIdentity.Services
 {
-    public class AuthService
+    public class AuthService:IAuthService
     {
         private UserManager<IdentityUser> _userManager;
         private RoleManager<IdentityRole> _roleManager;
@@ -51,7 +51,7 @@ namespace TiendaInspireIdentity.Services
                 new Claim(ClaimTypes.Role, roles.FirstOrDefault() ?? "NoRole")
             };
 
-            // Generate JWT Token
+            
 
             var secretKey = _configuration["JWT:SecretKey"];
             var audience = _configuration["JWT:Audience"];

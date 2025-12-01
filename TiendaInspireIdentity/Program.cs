@@ -1,9 +1,14 @@
+using Asp.Versioning;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TiendaInspireIdentity.Data;
- 
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using TiendaInspireIdentity;
+//using TiendaInspireIdentity.Data;
+using TiendaInspireIdentity.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +17,9 @@ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddControllers();
 builder.Configuration.AddUserSecrets(typeof(Program).Assembly, true);
 
-
+//Añadir servicios 
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -20,6 +27,23 @@ builder.Services.AddEndpointsApiExplorer();
 
 //DbContext 
 builder.AddNpgsqlDbContext<ApplicationDbContext>("servertienda");
+
+//Habilitar versionado
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1);
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),
+        new HeaderApiVersionReader("X-Api-Version"));
+})
+    .AddMvc()
+    .AddApiExplorer(options =>
+    {
+        options.GroupNameFormat = "'v'V";
+        options.SubstituteApiVersionInUrl = true;
+    });
 
 // Add ASP.NET Core Identity
 //Setting of the login screen
@@ -69,8 +93,14 @@ builder.Services.AddCors(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        // Configuración del token: Clave, Emisor, Audiencia, etc.
-        // ...
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration.GetSection("JWT:Issuer").Value,
+        ValidAudience = builder.Configuration.GetSection("JWT:Audience").Value,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JWT:SecretKey").Value!))
+    };
     });
 
 var app = builder.Build();
