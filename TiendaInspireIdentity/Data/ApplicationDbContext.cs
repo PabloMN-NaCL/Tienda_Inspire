@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace TiendaInspireIdentity
+namespace TiendaInspireIdentity.Data
 {
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {

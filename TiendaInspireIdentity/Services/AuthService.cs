@@ -1,11 +1,14 @@
 ﻿
 
+using MassTransit;
+using MassTransit.Transports;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using OrderFlowClase.API.Identity.Dto.Auth;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using TiendaInspire.Shared;
 
 namespace TiendaInspireIdentity.Services
 {
@@ -13,16 +16,21 @@ namespace TiendaInspireIdentity.Services
     {
         private UserManager<IdentityUser> _userManager;
         private RoleManager<IdentityRole> _roleManager;
+        private readonly IPublishEndpoint _publishEndpoint;
+
         private readonly IConfiguration _configuration;
 
         public AuthService(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IPublishEndpoint publishEndpoint)
+
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _publishEndpoint = publishEndpoint;
         }
         public async Task<ResponseLogin?> Login(string email, string password)
         {
@@ -88,7 +96,13 @@ namespace TiendaInspireIdentity.Services
                 Email = email
             }, password);
 
-            if (result != null) return true;
+            var user = await _userManager.FindByEmailAsync(email);
+            if (result != null)
+            {
+                //TODO: crear usauraio cerca de esto
+                await _publishEndpoint.Publish(new UserCreatedEvents(user.Id, user.Email!));
+            }
+                
 
             return false;
 

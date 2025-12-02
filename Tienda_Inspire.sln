@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos", "Elementos", "{
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaInspire.Shared", "TiendaInspire.Shared\TiendaInspire.Shared.csproj", "{DA7ED095-6922-44E4-96BF-FA096EA8680E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendInspire.Notificaciones", "TiendInspire.Notificaciones\TiendInspire.Notificaciones.csproj", "{EC6E1EE6-E7E1-C8E9-1F72-B44EFCEA93F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +42,14 @@ Global
 		{569E5A42-2351-A253-3F91-752392CF1C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{569E5A42-2351-A253-3F91-752392CF1C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{569E5A42-2351-A253-3F91-752392CF1C4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA7ED095-6922-44E4-96BF-FA096EA8680E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA7ED095-6922-44E4-96BF-FA096EA8680E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA7ED095-6922-44E4-96BF-FA096EA8680E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA7ED095-6922-44E4-96BF-FA096EA8680E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC6E1EE6-E7E1-C8E9-1F72-B44EFCEA93F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC6E1EE6-E7E1-C8E9-1F72-B44EFCEA93F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC6E1EE6-E7E1-C8E9-1F72-B44EFCEA93F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC6E1EE6-E7E1-C8E9-1F72-B44EFCEA93F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

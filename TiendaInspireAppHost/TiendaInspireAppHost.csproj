@@ -11,6 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+	<PackageReference Include="Aspire.Hosting.RabbitMQ" />
+	<PackageReference Include="Aspire.Hosting.Redis" />
 	<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" />
     <PackageReference Include="Aspire.Hosting.AppHost" />
     <PackageReference Include="Aspire.Hosting.PostgreSQL" />
@@ -19,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TiendaAspire.ApiGateway\TiendaAspire.ApiGateway.csproj" />
     <ProjectReference Include="..\TiendaInspireIdentity\TiendaInspireIdentity.csproj" />
+    <ProjectReference Include="..\TiendInspire.Notificaciones\TiendInspire.Notificaciones.csproj" />
   </ItemGroup>
 
 </Project>

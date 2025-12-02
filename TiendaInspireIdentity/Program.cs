@@ -1,12 +1,13 @@
 using Asp.Versioning;
 using FluentValidation;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TiendaInspireIdentity;
-//using TiendaInspireIdentity.Data;
+using TiendaInspireIdentity.Data;
 using TiendaInspireIdentity.Services;
 
 
@@ -74,6 +75,23 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 //builder.Services.AddReverseProxy()
 //    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
+builder.Services.AddMassTransit(config =>
+{
+    config.UsingRabbitMq((context, cfg) =>
+    {
+        var configuration = context.GetRequiredService<IConfiguration>();
+        var connectionString = configuration.GetConnectionString("rabbitmq");
+
+        if (!string.IsNullOrEmpty(connectionString))
+        {
+            cfg.Host(new Uri(connectionString));
+        }
+
+        cfg.ConfigureEndpoints(context);
+    });
+});
+
+
 //CORS para seguridad TODO
 const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
@@ -91,8 +109,9 @@ builder.Services.AddCors(options =>
 
 // Autentificacion con JWT (TODO)
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+    .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
     {
+
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
