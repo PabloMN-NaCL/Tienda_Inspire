@@ -6,6 +6,6 @@ namespace TiendInspire.Notificaciones.Email
 {
     internal interface IEmailService
     {
-        Task SendWelcomeEmail(string toEamil);
+        Task SendWelcomeMail(string toEamil);
     }
 }

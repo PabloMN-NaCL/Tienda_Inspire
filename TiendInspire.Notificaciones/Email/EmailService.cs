@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TiendInspire.Notificaciones.Email
 {
-    internal class EmailService
+    internal class EmailService:IEmailService
     {
         private readonly ILogger<EmailService> _logger;
         private readonly IConfiguration _configuration;
@@ -17,6 +17,8 @@ namespace TiendInspire.Notificaciones.Email
 
 
         }
+
+     
 
         public async Task SendWelcomeMail(string toEmail)
         {

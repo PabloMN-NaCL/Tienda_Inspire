@@ -120,7 +120,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ValidAudience = builder.Configuration.GetSection("JWT:Audience").Value,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JWT:SecretKey").Value!))
     });
-    
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -145,13 +146,6 @@ if (app.Environment.IsDevelopment())
 }
 
 
-
-
-
-
-
-
-builder.Services.AddAuthorization();
 
 //Implementacion CORS
 app.UseCors(MyAllowSpecificOrigins);

@@ -7,7 +7,7 @@ using TiendInspire.Notificaciones.Email;
 
 namespace TiendInspire.Notificaciones
 {
-    internal class UserRegisteredConsumer:IConsumer
+    internal class UserRegisteredConsumer:IConsumer<UserCreatedEvents>
     {
         private ILogger<UserRegisteredConsumer> _logger;
         private IEmailService _emailService;
@@ -23,10 +23,12 @@ namespace TiendInspire.Notificaciones
             var user = context.Message;
             _logger.LogInformation("New user registered: {UserId}, Email: {Email}", 
                 user.userId, user.email);
-            _emailService.SendWelcomeEmail(user.email);
+            _emailService.SendWelcomeMail(user.email);
 
             return Task.CompletedTask;
         }
 
     }
 }
+
+

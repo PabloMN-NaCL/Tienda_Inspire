@@ -4,6 +4,9 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TiendaInspireIdentity.Dto.UsersDtos.Requests;
+using TiendaInspireIdentity.Dto.UsersDtos.Responses;
+using TiendaInspireIdentity.Services;
 
 
 namespace TiendaInspireIdentity.Controllers

@@ -5,7 +5,11 @@ using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
 
+builder.AddRedisClient("redis");
+
+builder.Services.AddYarpReverseProxy(builder.Configuration);
 
 builder.Services.AddRateLimiter(rateLimiterOptions =>
 {
@@ -26,6 +30,7 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
             });
     });
 });
+builder.Services.AddAuthorization();
 
 builder.Services.AddGatewayCors();
 
@@ -44,7 +49,6 @@ app.UseHttpsRedirection();
 app.UseCors();
 app.UseAuthorization();
 
-app.MapControllers();
 
 app.UseRateLimiter();
 //Yarp
