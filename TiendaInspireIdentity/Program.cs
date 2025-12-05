@@ -18,16 +18,17 @@ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddControllers();
 builder.Configuration.AddUserSecrets(typeof(Program).Assembly, true);
 
-//Añadir servicios 
+//Aï¿½adir servicios 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddEndpointsApiExplorer();
 
-
-
 //DbContext 
 builder.AddNpgsqlDbContext<ApplicationDbContext>("servertienda");
+
+//Generate OpenApi services
+builder.Services.AddOpenApi();
 
 //Habilitar versionado
 builder.Services.AddApiVersioning(options =>
@@ -100,7 +101,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
 
-            // En producción, usa el dominio real de tu frontend.
+            // En producciï¿½n, usa el dominio real de tu frontend.
             policy.WithOrigins("http://localhost:3000")
                   .AllowAnyHeader()
                   .AllowAnyMethod();

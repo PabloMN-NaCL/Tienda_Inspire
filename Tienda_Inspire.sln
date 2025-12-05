@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaInspire.Shared", "Tie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendInspire.Notificaciones", "TiendInspire.Notificaciones\TiendInspire.Notificaciones.csproj", "{EC6E1EE6-E7E1-C8E9-1F72-B44EFCEA93F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaInspire.Catalog", "TiendaInspire.Catalog\TiendaInspire.Catalog.csproj", "{03AEA638-5269-185D-7FB1-EF35E9ED361F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{EC6E1EE6-E7E1-C8E9-1F72-B44EFCEA93F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC6E1EE6-E7E1-C8E9-1F72-B44EFCEA93F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC6E1EE6-E7E1-C8E9-1F72-B44EFCEA93F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03AEA638-5269-185D-7FB1-EF35E9ED361F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03AEA638-5269-185D-7FB1-EF35E9ED361F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03AEA638-5269-185D-7FB1-EF35E9ED361F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03AEA638-5269-185D-7FB1-EF35E9ED361F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

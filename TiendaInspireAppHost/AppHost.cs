@@ -26,8 +26,6 @@ var rabbit = builder
     .WithDataVolume("rabbitmq-data")
     .WithManagementPlugin();
 
-
-
 //Email server de pruebas
 var mailServer = builder
     .AddContainer("maildev", "maildev/maildev:latest")
@@ -52,6 +50,12 @@ builder.AddProject<Projects.TiendaAspire_ApiGateway>("tiendainspire-apigateway")
 builder.AddProject<Projects.TiendInspire_Notificaciones>("tiendinspire-notificaciones")
     .WaitFor(rabbit)
     .WithReference(rabbit);
+
+//builder.AddProject<Projects.TiendaInspireFront>("webfrontend")
+//    .WaitFor(cache)
+//    .WithReference(myService);
+
+builder.AddProject<Projects.TiendaInspire_Catalog>("tiendainspire-catalog");
 
 //builder.AddProject<Projects.TiendaInspireFront>("webfrontend")
 //    .WaitFor(cache)
