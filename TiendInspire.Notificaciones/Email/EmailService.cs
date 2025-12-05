@@ -27,17 +27,17 @@ namespace TiendInspire.Notificaciones.Email
 
             var host = _configuration.GetSection("Smtp:Host").Value;
             var port = int.Parse(_configuration.GetSection("Smtp:Port").Value!);
-client.Connect(host, port, false);
+                client.Connect(host, port, false);
 
             var fromEmail = _configuration.GetSection("Email:FromAddress").Value;
             var message = new MimeKit.MimeMessage();
 
-            message.From.Add(new MimeKit.MailboxAddress("OrderFlowClase", fromEmail!));
+            message.From.Add(new MimeKit.MailboxAddress("Tienda Inspire", fromEmail!));
             message.To.Add(new MimeKit.MailboxAddress("", toEmail));
-            message.Subject = "Welcome to OrderFlowClase!";
+            message.Subject = "Welcome to Tienda Inspire!";
             message.Body = new MimeKit.TextPart("plain")
             {            
-                Text = "Thank you for registering with OrderFlowClase. We're excited to have you on board!"
+                Text = "Thank you for registering with Tienda Inspire. We're excited to have you on board!"
             };
 
             await client.SendAsync(message);

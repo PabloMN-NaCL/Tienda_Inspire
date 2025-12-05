@@ -1,6 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
-using OrderFlowClase.API.Identity.Dto.Auth;
+using  TiendaInspireIdentity.Dto;
 
 namespace TiendaInspireIdentity.Services
 {

@@ -1,4 +1,4 @@
-﻿namespace OrderFlowClase.API.Identity.Dto.Auth
+﻿namespace TiendaInspireIdentity.Dto
 {
     public class ResponseLogin
     {

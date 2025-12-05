@@ -4,11 +4,12 @@ using MassTransit;
 using MassTransit.Transports;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using OrderFlowClase.API.Identity.Dto.Auth;
+
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using TiendaInspire.Shared;
+using TiendaInspireIdentity.Dto;
 
 namespace TiendaInspireIdentity.Services
 {
@@ -99,7 +100,7 @@ namespace TiendaInspireIdentity.Services
             var user = await _userManager.FindByEmailAsync(email);
             if (result != null)
             {
-                //TODO: crear usauraio cerca de esto
+                
                 await _publishEndpoint.Publish(new UserCreatedEvents(user.Id, user.Email!));
             }
                 
