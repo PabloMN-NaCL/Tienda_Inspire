@@ -12,3 +12,4 @@ namespace TiendaInspire.Shared.Events
         public Guid EventId { get; init; } = Guid.NewGuid();
         public DateTime CreateAt { get; init; } = DateTime.UtcNow;
     }
+}
