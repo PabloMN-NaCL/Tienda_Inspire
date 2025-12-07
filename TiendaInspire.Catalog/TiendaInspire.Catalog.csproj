@@ -21,12 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Dtos\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TiendaInspire.ServiceDefaults\TiendaInspire.ServiceDefaults.csproj" />
     <ProjectReference Include="..\TiendaInspire.Shared\TiendaInspire.Shared.csproj" />
   </ItemGroup>
