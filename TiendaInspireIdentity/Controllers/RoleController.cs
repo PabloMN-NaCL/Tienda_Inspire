@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TiendaInspireIdentity.Services;
-using TiendaInspireIdentity.DTOs; // Importar los DTOs
+using TiendaInspireIdentity.DTOs; 
 using System.Threading.Tasks;
 using TiendaInspireIdentity.Dto.RolesDtos;
 
@@ -38,7 +38,7 @@ namespace TiendaInspireIdentity.Controllers
 
             var roleEntities = await _roleService.GetAllRolesAsync();
 
-            // Mapeo de IdentityRole a RoleResponseDto
+           
             var responseDtos = roleEntities.Select(r => new RoleResponse
             {
                 Id = r.Id,
@@ -59,7 +59,7 @@ namespace TiendaInspireIdentity.Controllers
         {
             _logger.LogInformation("Fetching role: {RoleId}", roleId);
 
-            // ASUMIMOS que GetRoleByIdAsync ahora devuelve IdentityRole? o Result<IdentityRole?>
+            
             var roleEntity = await _roleService.GetRoleByIdAsync(roleId);
 
             if (roleEntity == null)
