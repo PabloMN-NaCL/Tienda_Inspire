@@ -61,4 +61,10 @@ builder.AddProject<Projects.TiendaInspire_Catalog>("tiendainspire-catalog");
 //    .WaitFor(cache)
 //    .WithReference(myService);
 
+builder.AddProject<Projects.TiendaInspire_Orders>("tiendainspire-orders");
+
+//builder.AddProject<Projects.TiendaInspireFront>("webfrontend")
+//    .WaitFor(cache)
+//    .WithReference(myService);
+
 builder.Build().Run();

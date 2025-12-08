@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TiendaAspire.ApiGateway\TiendaAspire.ApiGateway.csproj" />
     <ProjectReference Include="..\TiendaInspire.Catalog\TiendaInspire.Catalog.csproj" />
+    <ProjectReference Include="..\TiendaInspire.Orders\TiendaInspire.Orders.csproj" />
     <ProjectReference Include="..\TiendaInspireIdentity\TiendaInspireIdentity.csproj" />
     <ProjectReference Include="..\TiendInspire.Notificaciones\TiendInspire.Notificaciones.csproj" />
   </ItemGroup>
