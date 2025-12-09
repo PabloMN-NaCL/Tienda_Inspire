@@ -4,11 +4,12 @@ using TiendaInspire.Orders.DTOs;
 using TiendaInspire.Orders.Data;
 using TiendaInspire.Shared.CommonQuerys;
 using TiendaInspire.Shared.Events;
+using Microsoft.EntityFrameworkCore;
 
 namespace TiendaInspire.Orders.Services
 {
     public class OrderService(
-      OrderDbContext dbContext,
+      OrdersDbContext dbContext,
       IHttpClientFactory httpClientFactory,
       IPublishEndpoint publishEndpoint,
       ILogger<OrderService> logger) : IOrderService
@@ -171,7 +172,7 @@ namespace TiendaInspire.Orders.Services
                 return ServiceResult.Failure("Access denied");
             }
 
-            if (order.Status is not (OrderStatus.Pending or OrderStatus.Confirmed))
+            if (order.Status is not (OrderStatusEnum.Pending or OrderStatusEnum.Confirmed))
             {
                 return ServiceResult.Failure("Order cannot be cancelled at this stage");
             }
@@ -201,7 +202,7 @@ namespace TiendaInspire.Orders.Services
                 }
             }
 
-            order.Status = OrderStatus.Cancelled;
+            order.Status = OrderStatusEnum.Cancelled;
             order.UpdatedAt = DateTime.UtcNow;
 
             await dbContext.SaveChangesAsync();
@@ -219,7 +220,7 @@ namespace TiendaInspire.Orders.Services
             return ServiceResult.Success("Order cancelled successfully");
         }
 
-        public async Task<ServiceResult<IEnumerable<OrderListResponse>>> GetAllAsync(OrderStatus? status, string? userId)
+        public async Task<ServiceResult<IEnumerable<OrderListResponse>>> GetAllAsync(OrderStatusEnum? status, string? userId)
         {
             var query = dbContext.Orders.AsQueryable();
 
@@ -252,7 +253,7 @@ namespace TiendaInspire.Orders.Services
             return ServiceResult<OrderResponse>.Success(MapToResponse(order));
         }
 
-        public async Task<ServiceResult> UpdateStatusAsync(int id, OrderStatus newStatus)
+        public async Task<ServiceResult> UpdateStatusAsync(int id, OrderStatusEnum newStatus)
         {
             var order = await dbContext.Orders.FindAsync(id);
             if (order is null)
@@ -275,16 +276,16 @@ namespace TiendaInspire.Orders.Services
             return ServiceResult.Success("Order status updated successfully");
         }
 
-        private static bool IsValidStatusTransition(OrderStatus current, OrderStatus next)
+        private static bool IsValidStatusTransition(OrderStatusEnum current, OrderStatusEnum next)
         {
             return (current, next) switch
             {
-                (OrderStatus.Pending, OrderStatus.Confirmed) => true,
-                (OrderStatus.Pending, OrderStatus.Cancelled) => true,
-                (OrderStatus.Confirmed, OrderStatus.Processing) => true,
-                (OrderStatus.Confirmed, OrderStatus.Cancelled) => true,
-                (OrderStatus.Processing, OrderStatus.Shipped) => true,
-                (OrderStatus.Shipped, OrderStatus.Delivered) => true,
+                (OrderStatusEnum.Pending, OrderStatusEnum.Confirmed) => true,
+                (OrderStatusEnum.Pending, OrderStatusEnum.Cancelled) => true,
+                (OrderStatusEnum.Confirmed, OrderStatusEnum.Processing) => true,
+                (OrderStatusEnum.Confirmed, OrderStatusEnum.Cancelled) => true,
+                (OrderStatusEnum.Processing, OrderStatusEnum.Shipped) => true,
+                (OrderStatusEnum.Shipped, OrderStatusEnum.Delivered) => true,
                 _ => false
             };
         }
@@ -303,3 +304,4 @@ namespace TiendaInspire.Orders.Services
 
         private record ProductInfo(int Id, string Name, decimal Price, int Stock, bool IsActive);
     }
+}

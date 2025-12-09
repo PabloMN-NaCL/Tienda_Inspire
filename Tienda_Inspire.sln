@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11222.15 d18.0
+VisualStudioVersion = 18.0.11222.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaInspireAppHost", "TiendaInspireAppHost\TiendaInspireAppHost.csproj", "{0E80659F-3AC4-4DDB-9CBE-79D29D89E990}"
 EndProject
@@ -23,6 +23,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaInspire.Catalog", "TiendaInspire.Catalog\TiendaInspire.Catalog.csproj", "{03AEA638-5269-185D-7FB1-EF35E9ED361F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaInspire.Orders", "TiendaInspire.Orders\TiendaInspire.Orders.csproj", "{1806D831-439C-C21E-D05B-6D73A4A02FD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tienda_Inspire.Identity.Tests", "Tienda_Inspire.Identity.Tests\Tienda_Inspire.Identity.Tests.csproj", "{24A0E99D-2815-4AE0-9203-27D0F002FFB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,10 @@ Global
 		{1806D831-439C-C21E-D05B-6D73A4A02FD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1806D831-439C-C21E-D05B-6D73A4A02FD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1806D831-439C-C21E-D05B-6D73A4A02FD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24A0E99D-2815-4AE0-9203-27D0F002FFB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24A0E99D-2815-4AE0-9203-27D0F002FFB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24A0E99D-2815-4AE0-9203-27D0F002FFB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24A0E99D-2815-4AE0-9203-27D0F002FFB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
