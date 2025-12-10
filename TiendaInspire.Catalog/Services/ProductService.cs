@@ -7,13 +7,22 @@ using static TiendaInspire.Catalog.Dtos.ProductDTO;
 
 namespace TiendaInspire.Catalog.Services
 {
-    public class ProductService(CatalogDbContext dbContext, ILogger<ProductService> logger) : IProductService
+    public class ProductService : IProductService
     {
+        private CatalogDbContext _dbContext;
+        private ILogger<ProductService> _logger;
+
+        public ProductService(CatalogDbContext dbContext, ILogger<ProductService> logger) 
+        {
+            _dbContext = dbContext;
+            _logger = logger;
+        }
+
 
         //Get all
         public async Task<ServiceResult<IEnumerable<ProductListResponse>>> GetAllAsync(int? categoryId, string? search)
         {
-            var query = dbContext.Products.Include(p => p.Category).AsQueryable();
+            var query = _dbContext.Products.Include(p => p.Category).AsQueryable();
 
             if (categoryId.HasValue)
                 query = query.Where(p => p.CategoryId == categoryId.Value);
@@ -34,7 +43,7 @@ namespace TiendaInspire.Catalog.Services
         //GetbyId
         public async Task<ServiceResult<ProductResponse>> GetByIdAsync(int id)
         {
-            var product = await dbContext.Products
+            var product = await _dbContext.Products
                 .Include(p => p.Category)
                 .Where(p => p.Id == id)
                 .Select(p => new ProductResponse(
@@ -51,7 +60,7 @@ namespace TiendaInspire.Catalog.Services
         //Create
         public async Task<ServiceResult<ProductResponse>> CreateAsync(CreateProductRequest request)
         {
-            var categoryExists = await dbContext.Categories.AnyAsync(c => c.Id == request.CategoryId);
+            var categoryExists = await _dbContext.Categories.AnyAsync(c => c.Id == request.CategoryId);
             if (!categoryExists)
             {
                 return ServiceResult<ProductResponse>.Failure("Category not found");
@@ -66,12 +75,12 @@ namespace TiendaInspire.Catalog.Services
                 CategoryId = request.CategoryId
             };
 
-            dbContext.Products.Add(product);
-            await dbContext.SaveChangesAsync();
+            _dbContext.Products.Add(product);
+            await _dbContext.SaveChangesAsync();
 
-            var category = await dbContext.Categories.FindAsync(request.CategoryId);
+            var category = await _dbContext.Categories.FindAsync(request.CategoryId);
 
-            logger.LogInformation("Product created: {ProductId} - {Name}", product.Id, product.Name);
+            _logger.LogInformation("Product created: {ProductId} - {Name}", product.Id, product.Name);
 
             var response = new ProductResponse(
                 product.Id, product.Name, product.Description, product.Price,
@@ -82,13 +91,13 @@ namespace TiendaInspire.Catalog.Services
         //Update
         public async Task<ServiceResult<ProductResponse>> UpdateAsync(int id, UpdateProductRequest request)
         {
-            var product = await dbContext.Products.FindAsync(id);
+            var product = await _dbContext.Products.FindAsync(id);
             if (product is null)
             {
                 return ServiceResult<ProductResponse>.Failure("Product not found");
             }
 
-            var categoryExists = await dbContext.Categories.AnyAsync(c => c.Id == request.CategoryId);
+            var categoryExists = await _dbContext.Categories.AnyAsync(c => c.Id == request.CategoryId);
             if (!categoryExists)
             {
                 return ServiceResult<ProductResponse>.Failure("Category not found");
@@ -102,11 +111,11 @@ namespace TiendaInspire.Catalog.Services
             product.CategoryId = request.CategoryId;
             
 
-            await dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
-            var category = await dbContext.Categories.FindAsync(request.CategoryId);
+            var category = await _dbContext.Categories.FindAsync(request.CategoryId);
 
-            logger.LogInformation("Product updated: {ProductId} - {Name}", product.Id, product.Name);
+            _logger.LogInformation("Product updated: {ProductId} - {Name}", product.Id, product.Name);
 
             var response = new ProductResponse(
                 product.Id, product.Name, product.Description, product.Price,
@@ -117,7 +126,7 @@ namespace TiendaInspire.Catalog.Services
         //Update stock
         public async Task<ServiceResult> UpdateStockAsync(int id, int quantity)
         {
-            var product = await dbContext.Products.FindAsync(id);
+            var product = await _dbContext.Products.FindAsync(id);
             if (product is null)
             {
                 return ServiceResult.Failure("Product not found");
@@ -126,25 +135,25 @@ namespace TiendaInspire.Catalog.Services
             product.Stock = quantity;
          
 
-            await dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
-            logger.LogInformation("Product stock updated: {ProductId} - New stock: {Stock}", id, quantity);
+            _logger.LogInformation("Product stock updated: {ProductId} - New stock: {Stock}", id, quantity);
 
             return ServiceResult.Success("Stock updated successfully");
         }
         //Delete a product
         public async Task<ServiceResult> DeleteAsync(int id)
         {
-            var product = await dbContext.Products.FindAsync(id);
+            var product = await _dbContext.Products.FindAsync(id);
             if (product is null)
             {
                 return ServiceResult.Failure("Product not found");
             }
 
-            dbContext.Products.Remove(product);
-            await dbContext.SaveChangesAsync();
+            _dbContext.Products.Remove(product);
+            await _dbContext.SaveChangesAsync();
 
-            logger.LogInformation("Product deleted: {ProductId}", id);
+            _logger.LogInformation("Product deleted: {ProductId}", id);
 
             return ServiceResult.Success("Product deleted successfully");
         }

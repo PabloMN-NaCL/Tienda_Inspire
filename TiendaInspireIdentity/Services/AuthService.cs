@@ -16,20 +16,20 @@ namespace TiendaInspireIdentity.Services
     public class AuthService:IAuthService
     {
         private UserManager<IdentityUser> _userManager;
-        private RoleManager<IdentityRole> _roleManager;
+        
         private readonly IPublishEndpoint _publishEndpoint;
 
         private readonly IConfiguration _configuration;
 
         public AuthService(
             UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager,
+           
             IConfiguration configuration,
             IPublishEndpoint publishEndpoint)
 
         {
             _userManager = userManager;
-            _roleManager = roleManager;
+         
             _configuration = configuration;
             _publishEndpoint = publishEndpoint;
         }

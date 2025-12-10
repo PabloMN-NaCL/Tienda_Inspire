@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaInspire.Orders", "Tie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tienda_Inspire.Identity.Tests", "Tienda_Inspire.Identity.Tests\Tienda_Inspire.Identity.Tests.csproj", "{24A0E99D-2815-4AE0-9203-27D0F002FFB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tienda_Inspire.Catalog.Tests", "Tienda_Inspire.Catalog.Tests\Tienda_Inspire.Catalog.Tests.csproj", "{D03FFD49-8C08-4DF5-81DD-BEBC6FFBC822}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{24A0E99D-2815-4AE0-9203-27D0F002FFB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24A0E99D-2815-4AE0-9203-27D0F002FFB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24A0E99D-2815-4AE0-9203-27D0F002FFB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D03FFD49-8C08-4DF5-81DD-BEBC6FFBC822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D03FFD49-8C08-4DF5-81DD-BEBC6FFBC822}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D03FFD49-8C08-4DF5-81DD-BEBC6FFBC822}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D03FFD49-8C08-4DF5-81DD-BEBC6FFBC822}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

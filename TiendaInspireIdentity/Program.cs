@@ -8,7 +8,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TiendaInspireIdentity;
 using TiendaInspireIdentity.Data;
+using TiendaInspireIdentity.Extensions;
 using TiendaInspireIdentity.Services;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,7 @@ builder.Services.AddControllers();
 builder.Configuration.AddUserSecrets(typeof(Program).Assembly, true);
 
 //A�adir servicios 
+//Token service?
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
@@ -30,6 +33,25 @@ builder.AddNpgsqlDbContext<ApplicationDbContext>("servertienda");
 
 //Generate OpenApi services
 builder.Services.AddOpenApi();
+//builder.Services.AddOpenApi("v1", options =>
+//{
+//    options.ConfigureDocumentInfo(
+//        "OrderFlow Identity API V1",
+//        "v1",
+//        "Authentication API using Minimal APIs with JWT Bearer authentication");
+//    options.AddJwtBearerSecurity();
+//    options.FilterByApiVersion("v1");
+//});
+
+//builder.Services.AddOpenApi("v2", options =>
+//{
+//    options.ConfigureDocumentInfo(
+//        "OrderFlow Identity API V2",
+//        "v2",
+//        "Authentication API using Controllers with JWT Bearer authentication");
+//    options.AddJwtBearerSecurity();
+//    options.FilterByApiVersion("v2");
+//});
 
 //Habilitar versionado
 builder.Services.AddApiVersioning(options =>
@@ -124,16 +146,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+builder.Services.AddControllers();
+
 
 var app = builder.Build();
-
-
-
 
 //Modo desarrollo
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    //Initial seed for database (Admin name and pass, roles)
+    await app.Services.SeedDevelopmentDataAsync();
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await context.Database.MigrateAsync();
@@ -144,6 +167,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options=>
     {
         options.SwaggerEndpoint("/openapi/v1.json", "TiendaInspireIdentity v1");
+        options.SwaggerEndpoint("/openapi/v2.json", "TiendaInspireIdentity v2");
     });
 }
 
@@ -163,7 +187,5 @@ app.MapDefaultEndpoints();
 app.MapControllers();
 
 
-//Yarp
-//app.MapReverseProxy();
 
 app.Run();
