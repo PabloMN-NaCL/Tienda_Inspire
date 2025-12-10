@@ -55,21 +55,21 @@ namespace TiendaInspireIdentity.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<RoleDetailResponse>> GetRoleById(string roleId)
+        public async Task<ActionResult<RoleDetailResponse>> GetRoleById(string id)
         {
-            _logger.LogInformation("Fetching role: {RoleId}", roleId);
+            _logger.LogInformation("Fetching role: {RoleId}", id);
 
             
-            var roleEntity = await _roleService.GetRoleByIdAsync(roleId);
+            var roleEntity = await _roleService.GetRoleByIdAsync(id);
 
             if (roleEntity == null)
             {
-                _logger.LogWarning("Role not found: {RoleId}", roleId);
+                _logger.LogWarning("Role not found: {RoleId}", id);
                 // Retorna 404 Not Found con ProblemDetails
                 return NotFound(new ProblemDetails
                 {
                     Title = "Role not found",
-                    Detail = $"Role with ID '{roleId}' was not found.",
+                    Detail = $"Role with ID '{id}' was not found.",
                     Status = StatusCodes.Status404NotFound
                 });
             }
