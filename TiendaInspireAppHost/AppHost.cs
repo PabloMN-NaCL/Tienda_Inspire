@@ -11,6 +11,8 @@ var database = builder.AddPostgres("postgres")
     .WithPgAdmin(pgAdmin => pgAdmin.WithHostPort(5050));
 
 var postgresdb = database.AddDatabase("servertienda");
+var catalogDb = database.AddDatabase("catalogdb");
+var ordersDb = database.AddDatabase("ordersdb");
 
 
 //Redis para identity
@@ -33,38 +35,47 @@ var mailServer = builder
     .WithHttpEndpoint(port: 1080, targetPort: 1080, name: "web")
     .WithEndpoint(port: 1025, targetPort: 1025, name: "smtp");
 
-var myService = builder.AddProject<Projects.TiendaInspireIdentity>("tiendainsprireidentity")
+var myService = builder.AddProject<Projects.TiendaInspireIdentity>("tiendainspireidentity")
     .WaitFor(postgresdb)
     .WaitFor(rabbit)
     .WithReference(rabbit)
-    .WithReference(postgresdb);
-   
+    .WithReference(postgresdb)
+    .WithReference(redis);
+//Creado con referencia a redis. Probar
+
+var catalogService = builder.AddProject<Projects.TiendaInspire_Catalog>("tiendainspirecatalog")
+    .WithReference(catalogDb)
+    .WaitFor(catalogDb);
+
+var ordersService = builder.AddProject<Projects.TiendaInspire_Orders>("tiendainspireorders")
+      .WithReference(ordersDb)
+    .WithReference(rabbit)
+    .WithReference(catalogService)
+    .WaitFor(ordersDb)
+    .WaitFor(rabbit);
+
 
 builder.AddProject<Projects.TiendaAspire_ApiGateway>("tiendainspire-apigateway")
     .WithReference(redis)
     .WithReference(myService)
+    .WithReference(catalogService)
+    .WithReference(ordersService)
     .WaitFor(redis)
-    .WaitFor(myService);
+    .WaitFor(myService)
+    .WaitFor(catalogService)
+    .WaitFor(ordersService);
+
 
 
 builder.AddProject<Projects.TiendInspire_Notificaciones>("tiendinspire-notificaciones")
     .WaitFor(rabbit)
-    .WithReference(rabbit);
+    .WithReference(rabbit)
+    .WithEnvironment("Email__SmtpHost", mailServer.GetEndpoint("smtp").Property(EndpointProperty.Host))
+    .WithEnvironment("Email__SmtpPort", mailServer.GetEndpoint("smtp").Property(EndpointProperty.Port));
 
 //builder.AddProject<Projects.TiendaInspireFront>("webfrontend")
 //    .WaitFor(cache)
 //    .WithReference(myService);
 
-builder.AddProject<Projects.TiendaInspire_Catalog>("tiendainspire-catalog");
-
-//builder.AddProject<Projects.TiendaInspireFront>("webfrontend")
-//    .WaitFor(cache)
-//    .WithReference(myService);
-
-builder.AddProject<Projects.TiendaInspire_Orders>("tiendainspire-orders");
-
-//builder.AddProject<Projects.TiendaInspireFront>("webfrontend")
-//    .WaitFor(cache)
-//    .WithReference(myService);
 
 builder.Build().Run();

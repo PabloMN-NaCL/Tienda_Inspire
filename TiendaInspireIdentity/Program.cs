@@ -171,7 +171,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-
+app.UseCors();
 
 //Implementacion CORS
 app.UseCors(MyAllowSpecificOrigins);

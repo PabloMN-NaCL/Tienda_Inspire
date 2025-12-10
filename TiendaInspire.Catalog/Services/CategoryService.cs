@@ -52,7 +52,7 @@ namespace TiendaInspire.Catalog.Services
             _dbContext.Categories.Add(category);
             await _dbContext.SaveChangesAsync();
 
-            logger.LogInformation("Category created: {CategoryId} - {Name}", category.Id, category.Name);
+            _logger.LogInformation("Category created: {CategoryId} - {Name}", category.Id, category.Name);
 
             var response = new CategoryResponse(category.Id, category.Name, category.Description, 0);
             return ServiceResult<CategoryResponse>.Success(response, "Category created successfully");
@@ -71,7 +71,7 @@ namespace TiendaInspire.Catalog.Services
 
             await _dbContext.SaveChangesAsync();
 
-            logger.LogInformation("Category updated: {CategoryId} - {Name}", category.Id, category.Name);
+            _logger.LogInformation("Category updated: {CategoryId} - {Name}", category.Id, category.Name);
 
             var productCount = await _dbContext.Products.CountAsync(p => p.CategoryId == id);
             var response = new CategoryResponse(category.Id, category.Name, category.Description, productCount);
@@ -97,7 +97,7 @@ namespace TiendaInspire.Catalog.Services
             _dbContext.Categories.Remove(category);
             await _dbContext.SaveChangesAsync();
 
-            logger.LogInformation("Category deleted: {CategoryId}", id);
+            _logger.LogInformation("Category deleted: {CategoryId}", id);
 
             return ServiceResult.Success("Category deleted successfully");
         }
