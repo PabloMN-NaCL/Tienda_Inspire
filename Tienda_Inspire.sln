@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tienda_Inspire.Catalog.Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{E0C1AE55-8787-4999-890F-AD73D9F5DEAD}"
 	ProjectSection(SolutionItems) = preProject
-		identity-docker.yml = identity-docker.yml
+		.github\workflows\identity-docker.yml = .github\workflows\identity-docker.yml
 	EndProjectSection
 EndProject
 Global
