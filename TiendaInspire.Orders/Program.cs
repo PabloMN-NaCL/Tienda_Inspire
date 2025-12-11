@@ -11,8 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 builder.AddNpgsqlDbContext<OrdersDbContext>("ordersdb");
 
-//Para eventos de rabbit
-// Mensajes de envio
+
 builder.Services.AddMassTransit(x =>
 {
     x.UsingRabbitMq((context, cfg) =>
@@ -29,16 +28,16 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-// Add HttpClient for Catalog service
+
 builder.Services.AddHttpClient("catalog", client =>
 {
     client.BaseAddress = new Uri("https+http://orderflow-catalog");
 });
 
-// JWT Authentication (shared across all microservices)
+
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
-// Register services
+
 builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddControllers()

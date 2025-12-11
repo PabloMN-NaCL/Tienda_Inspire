@@ -2,7 +2,6 @@ using System.Security.Principal;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-//var cache = builder.AddRedisContainer("cache");
 
 //Pgadmin
 var database = builder.AddPostgres("postgres")

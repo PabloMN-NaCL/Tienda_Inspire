@@ -9,13 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-// Add PostgreSQL DbContext
+
 builder.AddNpgsqlDbContext<CatalogDbContext>("catalogdb");
 
-// JWT Authentication (shared across all microservices)
+
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
-// Register services
+
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
@@ -29,7 +29,7 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
