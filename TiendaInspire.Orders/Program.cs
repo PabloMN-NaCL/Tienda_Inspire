@@ -17,7 +17,7 @@ builder.Services.AddMassTransit(x =>
     x.UsingRabbitMq((context, cfg) =>
     {
         var configuration = context.GetRequiredService<IConfiguration>();
-        var connectionString = configuration.GetConnectionString("messaging");
+        var connectionString = configuration.GetConnectionString("rabbitmq");
 
         if (!string.IsNullOrEmpty(connectionString))
         {
@@ -31,7 +31,7 @@ builder.Services.AddMassTransit(x =>
 
 builder.Services.AddHttpClient("catalog", client =>
 {
-    client.BaseAddress = new Uri("https+http://orderflow-catalog");
+    client.BaseAddress = new Uri("https+http://tiendainspirecatalog");
 });
 
 

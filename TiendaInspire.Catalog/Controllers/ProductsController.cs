@@ -6,7 +6,7 @@ namespace TiendaInspire.Catalog.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class ProductsController(ProductService productService) : ControllerBase
+    public class ProductsController(IProductService productService) : ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductListResponse>>> GetAll(

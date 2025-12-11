@@ -28,6 +28,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tienda_Inspire.Identity.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tienda_Inspire.Catalog.Tests", "Tienda_Inspire.Catalog.Tests\Tienda_Inspire.Catalog.Tests.csproj", "{D03FFD49-8C08-4DF5-81DD-BEBC6FFBC822}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{E0C1AE55-8787-4999-890F-AD73D9F5DEAD}"
+	ProjectSection(SolutionItems) = preProject
+		identity-docker.yml = identity-docker.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

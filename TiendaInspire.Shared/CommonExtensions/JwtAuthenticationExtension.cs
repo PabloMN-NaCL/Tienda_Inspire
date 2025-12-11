@@ -18,12 +18,9 @@ namespace TiendaInspire.Shared.CommonExtensions
             Action<JwtBearerEvents>? configureEvents = null)
         {
           
-            var jwtSecret = configuration["Jwt:Secret"]
-                ?? "build-time-secret-key-minimum-32-characters-required-for-hmac-sha256";
-            var jwtIssuer = configuration["Jwt:Issuer"]
-                ?? "build-time-issuer";
-            var jwtAudience = configuration["Jwt:Audience"]
-                ?? "build-time-audience";
+            var jwtSecret = configuration["Jwt:SecretKey"];
+            var jwtIssuer = configuration["Jwt:Issuer"];
+            var jwtAudience = configuration["Jwt:Audience"];
 
             services.AddAuthentication(options =>
             {
