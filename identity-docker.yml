@@ -8,6 +8,7 @@ on:
       - 'TiendaInspireIdentity/**'
       - 'TiendaInspire.ServiceDefaults/**'
       - 'TiendaInspire.Shared/**'
+      - 'test' 
       - '.github/workflows/identity-docker.yml' 
   pull_request:
     branches: [ "main", "master" ]
