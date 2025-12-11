@@ -22,7 +22,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository_owner }}/identity-api-image
+  IMAGE_NAME: ${{ toLower(github.repository_owner) }}/identity-api-image
 
 jobs:
   build:
