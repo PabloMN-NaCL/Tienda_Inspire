@@ -6,7 +6,8 @@ var builder = DistributedApplication.CreateBuilder(args);
 //Pgadmin
 var database = builder.AddPostgres("postgres")
     .WithLifetime(ContainerLifetime.Persistent)
-    .WithDataVolume("postgres")
+    .WithDataVolume("postgres") 
+    .WithHostPort(5431)
     .WithPgAdmin(pgAdmin => pgAdmin.WithHostPort(5050));
 
 var postgresdb = database.AddDatabase("servertienda");
@@ -34,6 +35,8 @@ var mailServer = builder
     .WithHttpEndpoint(port: 1080, targetPort: 1080, name: "web")
     .WithEndpoint(port: 1025, targetPort: 1025, name: "smtp");
 
+
+//MicroServices
 var myService = builder.AddProject<Projects.TiendaInspireIdentity>("tiendainspireidentity")
     .WaitFor(postgresdb)
     .WaitFor(rabbit)

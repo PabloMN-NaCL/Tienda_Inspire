@@ -11,7 +11,6 @@ namespace TiendaInspire.Catalog.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductListResponse>>> GetAll(
             [FromQuery] int? categoryId = null,
-            [FromQuery] bool? isActive = null,
             [FromQuery] string? search = null)
         {
             var result = await productService.GetAllAsync(categoryId, search);
