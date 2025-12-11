@@ -30,10 +30,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-      
-    # NOW CORRECTLY USING THE toLower FUNCTION
-    env:
-      IMAGE_NAME: ${{ toLower(github.repository_owner) }}/identity-api-image
+     
 
     steps:
       - name: Checkout repository
