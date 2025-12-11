@@ -56,6 +56,6 @@ jobs:
           file: ./TiendaInspireIdentity/Dockerfile
           push: true
           # Now uses the correctly lowercased IMAGE_NAME
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          tags: latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
