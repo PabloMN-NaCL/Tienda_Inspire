@@ -29,7 +29,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write # Crucial permission for pushing to ghcr.io
+      packages: write
+      
+    # NOW CORRECTLY USING THE toLower FUNCTION
+    env:
+      IMAGE_NAME: ${{ toLower(github.repository_owner) }}/identity-api-image
 
     steps:
       - name: Checkout repository
@@ -38,14 +42,12 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         
-      # --- ADD THIS STEP ---
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      # ---------------------
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -53,14 +55,7 @@ jobs:
           context: .
           file: ./TiendaInspireIdentity/Dockerfile
           push: true
-          # Remove `load: true` as it is not needed when `push: true`
-          # load: true # <--- REMOVE THIS LINE
-          
-          # --- UPDATE THIS TAG TO USE THE ENV VARIABLES ---
+          # Now uses the correctly lowercased IMAGE_NAME
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          # ------------------------------------------------
-          
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-
