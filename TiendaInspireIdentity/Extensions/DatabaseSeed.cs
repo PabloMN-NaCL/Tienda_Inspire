@@ -33,7 +33,7 @@ namespace TiendaInspireIdentity.Extensions
                 if (!await roleManager.RoleExistsAsync(role))
                 {
                     await roleManager.CreateAsync(new IdentityRole(role));
-                    Console.WriteLine($"✅ Role created: {role}");
+                    Console.WriteLine($" Role created: {role}");
                 }
             }
         }
