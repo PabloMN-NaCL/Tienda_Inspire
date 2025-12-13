@@ -58,9 +58,17 @@ namespace TiendaInspireIdentity.Services
                 new Claim(ClaimTypes.Email, user.Email!),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Role, roles.FirstOrDefault() ?? "NoRole")
+
+                 
             };
 
-            
+            //Asignar roles que tiene el usuario
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+
 
             var secretKey = _configuration["JWT:SecretKey"];
             var audience = _configuration["JWT:Audience"];
@@ -100,7 +108,9 @@ namespace TiendaInspireIdentity.Services
             var user = await _userManager.FindByEmailAsync(email);
             if (result != null)
             {
-                
+                //Asignar rol por defecto
+                await _userManager.AddToRoleAsync(user, "Customer");
+
                 await _publishEndpoint.Publish(new UserCreatedEvents(user.Id, user.Email!));
             }
                 

@@ -114,6 +114,7 @@ namespace TiendaInspireIdentity.Services
             }
             role.Name = newRolename;
 
+            var result = await _roleManager.UpdateAsync(role);
 
             return true;
         }
