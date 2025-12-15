@@ -36,7 +36,7 @@ builder.Services.AddOpenApi();
 //builder.Services.AddOpenApi("v1", options =>
 //{
 //    options.ConfigureDocumentInfo(
-//        "OrderFlow Identity API V1",
+//        "TiendaInspire Identity API V1",
 //        "v1",
 //        "Authentication API using Minimal APIs with JWT Bearer authentication");
 //    options.AddJwtBearerSecurity();
@@ -46,7 +46,7 @@ builder.Services.AddOpenApi();
 //builder.Services.AddOpenApi("v2", options =>
 //{
 //    options.ConfigureDocumentInfo(
-//        "OrderFlow Identity API V2",
+//        "TiendaInspire Identity API V2",
 //        "v2",
 //        "Authentication API using Controllers with JWT Bearer authentication");
 //    options.AddJwtBearerSecurity();

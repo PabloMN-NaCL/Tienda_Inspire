@@ -23,8 +23,8 @@ namespace TiendInspire.Notificaciones.Email
 
             using var client = new SmtpClient();
 
-            var host = _configuration.GetSection("Smtp:Host").Value;
-            var port = int.Parse(_configuration.GetSection("Smtp:Port").Value!);
+            var host = _configuration.GetSection("Email:SmtpHost").Value;
+            var port = int.Parse(_configuration.GetSection("Email:SmtpPort").Value!);
                 client.Connect(host, port, false);
 
             var fromEmail = _configuration.GetSection("Email:FromAddress").Value;
@@ -48,8 +48,8 @@ namespace TiendInspire.Notificaciones.Email
             IEnumerable<TiendaInspire.Shared.Events.OrderItemEvent> items)
         {
             using var client = new SmtpClient();
-            var host = _configuration.GetSection("Smtp:Host").Value;
-            var port = int.Parse(_configuration.GetSection("Smtp:Port").Value!);
+            var host = _configuration.GetSection("Email:SmtpHost").Value;
+            var port = int.Parse(_configuration.GetSection("Email:SmtpPort").Value!);
             client.Connect(host, port, false);
 
             var fromEmail = _configuration.GetSection("Email:FromAddress").Value;
@@ -80,8 +80,8 @@ namespace TiendInspire.Notificaciones.Email
         public async Task SendOrderCancellationMail(string toEmail, int orderId)
         {
             using var client = new SmtpClient();
-            var host = _configuration.GetSection("Smtp:Host").Value;
-            var port = int.Parse(_configuration.GetSection("Smtp:Port").Value!);
+            var host = _configuration.GetSection("Email:SmtpHost").Value;
+            var port = int.Parse(_configuration.GetSection("Email:SmtpPort").Value!);
             client.Connect(host, port, false);
 
             var fromEmail = _configuration.GetSection("Email:FromAddress").Value;

@@ -47,7 +47,9 @@ namespace TiendaInspire.Orders.Controllers
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized();
 
-            var result = await orderService.CreateAsync(userId, request);
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+
+            var result = await orderService.CreateAsync(userId, userEmail!, request);
 
             if (!result.Succeeded)
             {
@@ -67,7 +69,9 @@ namespace TiendaInspire.Orders.Controllers
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized();
 
-            var result = await orderService.CancelAsync(id, userId);
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+
+            var result = await orderService.CancelAsync(id,  userEmail, userId);
 
             if (!result.Succeeded)
             {

@@ -9,8 +9,8 @@ namespace TiendaInspire.Orders.Services
 
         Task<ServiceResult<IEnumerable<OrderListResponse>>> GetUserOrdersAsync(string userId);
         Task<ServiceResult<OrderResponse>> GetByIdAsync(int id, string userId);
-        Task<ServiceResult<OrderResponse>> CreateAsync(string userId, CreateOrderRequest request);
-        Task<ServiceResult> CancelAsync(int id, string userId);
+        Task<ServiceResult<OrderResponse>> CreateAsync(string userId, string userEmail, CreateOrderRequest request);
+        Task<ServiceResult> CancelAsync(int id, string userEmail, string userId);
 
 
         Task<ServiceResult<IEnumerable<OrderListResponse>>> GetAllAsync(OrderStatusEnum? status, string? userId);

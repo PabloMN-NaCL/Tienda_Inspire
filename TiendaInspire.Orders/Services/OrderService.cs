@@ -45,7 +45,7 @@ namespace TiendaInspire.Orders.Services
             return ServiceResult<OrderResponse>.Success(MapToResponse(order));
         }
 
-        public async Task<ServiceResult<OrderResponse>> CreateAsync(string userId, CreateOrderRequest request)
+        public async Task<ServiceResult<OrderResponse>> CreateAsync(string userId, string? userEmail, CreateOrderRequest request)
         {
             if (!request.Items.Any())
             {
@@ -109,6 +109,7 @@ namespace TiendaInspire.Orders.Services
             var orderCreatedEvent = new OrderCreatedEvent(
                 order.Id,
                 userId,
+                userEmail,
                 orderItems.Select(i => new OrderItemEvent(i.ProductId, i.ProductName, i.Quantity)));
 
             await publishEndpoint.Publish(orderCreatedEvent);
@@ -133,7 +134,7 @@ namespace TiendaInspire.Orders.Services
             }
         }
 
-        public async Task<ServiceResult> CancelAsync(int id, string userId)
+        public async Task<ServiceResult> CancelAsync(int id, string userEmail, string userId)
         {
             var order = await dbContext.Orders
                 .Include(o => o.Items)
@@ -190,6 +191,7 @@ namespace TiendaInspire.Orders.Services
             var orderCancelledEvent = new OrderCancelledEvent(
                 order.Id,
                 userId,
+                userEmail,
                 order.Items.Select(i => new OrderItemEvent(i.ProductId, i.ProductName, i.Quantity)));
 
             await publishEndpoint.Publish(orderCancelledEvent);
