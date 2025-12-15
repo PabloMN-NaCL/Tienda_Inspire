@@ -7,7 +7,7 @@ using TiendInspire.Notificaciones.Email;
 
 namespace TiendInspire.Notificaciones
 {
-    internal class UserRegisteredConsumer:IConsumer<UserCreatedEvents>
+    public class UserRegisteredConsumer:IConsumer<UserCreatedEvents>
     {
         private ILogger<UserRegisteredConsumer> _logger;
         private IEmailService _emailService;

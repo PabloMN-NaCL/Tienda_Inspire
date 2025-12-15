@@ -62,11 +62,7 @@ namespace TiendaInspire.Orders.Services
                 {
                     // Get product info
                     var response = await catalogClient.GetAsync($"/api/v1/products/{item.ProductId}");
-                    //if (!response.IsSuccessStatusCode)
-                    //{
-                    //    await ReleaseReservedStockAsync(catalogClient, reservedItems);
-                    //    return ServiceResult<OrderResponse>.Failure($"Product {item.ProductId} not found");
-                    //}
+          
 
                     var product = await response.Content.ReadFromJsonAsync<ProductInfo>();
                     if (product is null)
@@ -75,26 +71,7 @@ namespace TiendaInspire.Orders.Services
                         return ServiceResult<OrderResponse>.Failure($"Could not fetch product {item.ProductId}");
                     }
 
-                    //if (!product.IsActive)
-                    //{
-                    //    await ReleaseReservedStockAsync(catalogClient, reservedItems);
-                    //    return ServiceResult<OrderResponse>.Failure($"Product {product.Name} is not available");
-                    //}
 
-                    // Reserve stock atomically via HTTP
-                    //var reserveResponse = await catalogClient.PostAsJsonAsync(
-                    //    $"/api/v1/products/{item.ProductId}/reserve",
-                    //    new { Quantity = item.Quantity });
-
-                    //if (!reserveResponse.IsSuccessStatusCode)
-                    //{
-                    //    await ReleaseReservedStockAsync(catalogClient, reservedItems);
-                    //    var error = await reserveResponse.Content.ReadAsStringAsync();
-                    //    return ServiceResult<OrderResponse>.Failure(
-                    //        reserveResponse.StatusCode == System.Net.HttpStatusCode.Conflict
-                    //            ? $"Insufficient stock for {product.Name}"
-                    //            : $"Failed to reserve stock for {product.Name}: {error}");
-                    //}
 
                     reservedItems.Add((item.ProductId, item.Quantity));
 
@@ -128,7 +105,7 @@ namespace TiendaInspire.Orders.Services
 
             logger.LogInformation("Order created: {OrderId} for user {UserId}", order.Id, userId);
 
-            // Publish event for audit/notifications (stock already reserved via HTTP)
+           
             var orderCreatedEvent = new OrderCreatedEvent(
                 order.Id,
                 userId,
