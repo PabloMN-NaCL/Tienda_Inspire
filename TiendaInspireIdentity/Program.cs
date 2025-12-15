@@ -95,9 +95,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-//Yarp  TODO: Configurar Yarp en appsettings.json
-//builder.Services.AddReverseProxy()
-//    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+
 
 builder.Services.AddMassTransit(config =>
 {
@@ -173,7 +171,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors();
 
-//Implementacion CORS
+
 app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
@@ -181,7 +179,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//Implementacion de ServicDefaults
+
 app.MapDefaultEndpoints();
 
 app.MapControllers();

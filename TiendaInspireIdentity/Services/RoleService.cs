@@ -25,7 +25,7 @@ namespace TiendaInspireIdentity.Services
         {
 
             var existingRole = await _roleManager.FindByNameAsync(roleName);
-           
+
 
             if (existingRole is not null)
             {
@@ -57,7 +57,7 @@ namespace TiendaInspireIdentity.Services
                 return false;
             }
 
-            
+
             var usersInRole = await _userManager.GetUsersInRoleAsync(role.Name!);
             if (usersInRole.Any())
             {
@@ -87,7 +87,7 @@ namespace TiendaInspireIdentity.Services
 
             if (role == null)
             {
-             
+
                 _logger.LogWarning("Rol con ID '{RoleId}' no encontrado.", roleId);
             }
             else
@@ -107,7 +107,7 @@ namespace TiendaInspireIdentity.Services
                 return false;
             }
 
-           
+
             if (role.Name?.Equals(newRolename, StringComparison.OrdinalIgnoreCase) == true)
             {
                 return true;
@@ -120,7 +120,7 @@ namespace TiendaInspireIdentity.Services
         }
         public async Task<List<IdentityRole>> GetAllRolesAsync()
         {
-            
+
             return await _roleManager.Roles.ToListAsync();
         }
 

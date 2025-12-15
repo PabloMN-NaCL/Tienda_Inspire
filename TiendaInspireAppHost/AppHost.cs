@@ -43,7 +43,7 @@ var myService = builder.AddProject<Projects.TiendaInspireIdentity>("tiendainspir
     .WithReference(rabbit)
     .WithReference(postgresdb)
     .WithReference(redis);
-//Creado con referencia a redis. Probar
+
 
 var catalogService = builder.AddProject<Projects.TiendaInspire_Catalog>("tiendainspirecatalog")
     .WithReference(catalogDb)
@@ -75,9 +75,7 @@ builder.AddProject<Projects.TiendInspire_Notificaciones>("tiendinspire-notificac
     .WithEnvironment("Email__SmtpHost", mailServer.GetEndpoint("smtp").Property(EndpointProperty.Host))
     .WithEnvironment("Email__SmtpPort", mailServer.GetEndpoint("smtp").Property(EndpointProperty.Port));
 
-//builder.AddProject<Projects.TiendaInspireFront>("webfrontend")
-//    .WaitFor(cache)
-//    .WithReference(myService);
+
 
 
 builder.Build().Run();

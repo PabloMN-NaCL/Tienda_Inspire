@@ -7,7 +7,7 @@ namespace TiendaInspireIdentity.Extensions
 {
     public static class DatabaseSeed
     {
-        //
+      
         public static async Task SeedDevelopmentDataAsync(this IServiceProvider serviceProvider)
         {
             using var scope = serviceProvider.CreateScope();
@@ -17,10 +17,9 @@ namespace TiendaInspireIdentity.Extensions
             var context = services.GetRequiredService<ApplicationDbContext>();
             await context.Database.MigrateAsync();
 
-            // Seed roles
+  
             await SeedRolesAsync(services);
 
-            // Seed admin user
             await SeedAdminUserAsync(services);
         }
 

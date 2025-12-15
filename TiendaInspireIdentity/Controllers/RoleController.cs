@@ -26,9 +26,6 @@ namespace TiendaInspireIdentity.Controllers
             _logger = logger;
         }
 
-        // ------------------------------------------------------------------
-        // READ: Obtener todos los roles
-        // ------------------------------------------------------------------
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<RoleResponse>))]
@@ -48,10 +45,7 @@ namespace TiendaInspireIdentity.Controllers
             return Ok(responseDtos);
         }
 
-        // ------------------------------------------------------------------
-        // READ: Obtener rol por ID
-        // ------------------------------------------------------------------
-
+    
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -84,9 +78,6 @@ namespace TiendaInspireIdentity.Controllers
             return Ok(responseDto);
         }
 
-        // ------------------------------------------------------------------
-        // CREATE: Crear un nuevo rol (Utiliza RoleCreateDto)
-        // ------------------------------------------------------------------
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -94,33 +85,26 @@ namespace TiendaInspireIdentity.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateRole([FromBody] RoleCreateRequest model)
         {
-            // La validación de DTO (Required, StringLength) se maneja automáticamente
-            // por [ApiController] si se utiliza [Required] y [StringLength] en el DTO.
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            // El controlador usa el nombre del DTO y lo pasa al servicio
+            
             var success = await _roleService.CreateRoleAsync(model.Name);
 
             if (success)
             {
-                // Deberíamos devolver 201 Created y la ubicación del recurso, 
-                // pero como el servicio solo devuelve bool, nos limitamos a 201.
+
                 _logger.LogInformation("Nuevo rol '{RoleName}' creado exitosamente.", model.Name);
                 return StatusCode(StatusCodes.Status201Created);
             }
 
-            // Si success es false, significa que falló la creación (error en BD) 
-            // O, según tu servicio, que ya existe. 
-            // Devolvemos 400 Bad Request para indicar un problema.
+
             return BadRequest($"No se pudo crear el rol '{model.Name}'. Podría ya existir.");
         }
 
-        // ------------------------------------------------------------------
-        // UPDATE: Actualizar el nombre de un rol (Utiliza RoleUpdateDto)
-        // ------------------------------------------------------------------
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
@@ -134,14 +118,14 @@ namespace TiendaInspireIdentity.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Primero, verificamos si existe para dar un 404 claro.
+          
             var existingRole = await _roleService.GetRoleByIdAsync(id);
             if (existingRole == null)
             {
                 return NotFound($"Rol con ID '{id}' no encontrado para actualizar.");
             }
 
-            // El servicio recibe el nuevo nombre del DTO.
+          
             var success = await _roleService.UpdateRoleAsync(id, model.NewName);
 
             if (success)
@@ -150,13 +134,10 @@ namespace TiendaInspireIdentity.Controllers
                 return NoContent();
             }
 
-            // Si falla, el servicio registra el error (puede ser un problema de concurrencia, etc.)
+ 
             return BadRequest($"No se pudo actualizar el rol con ID '{id}'.");
         }
 
-        // ------------------------------------------------------------------
-        // DELETE: Eliminar un rol
-        // ------------------------------------------------------------------
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
@@ -165,13 +146,13 @@ namespace TiendaInspireIdentity.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteRole(string id)
         {
-            // El servicio se encarga de buscar y verificar si tiene usuarios
+           
             var success = await _roleService.DeleteRoleASync(id);
 
             if (success)
             {
                 _logger.LogInformation("Rol con ID '{RoleId}' eliminado exitosamente.", id);
-                return NoContent(); // 204 No Content
+                return NoContent(); 
             }
 
             

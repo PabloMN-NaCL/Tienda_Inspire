@@ -18,8 +18,6 @@ namespace TiendInspire.Notificaciones.Email
 
         }
 
-     
-
         public async Task SendWelcomeMail(string toEmail)
         {
 
@@ -34,20 +32,17 @@ namespace TiendInspire.Notificaciones.Email
 
             message.From.Add(new MimeKit.MailboxAddress("Tienda Inspire", fromEmail!));
             message.To.Add(new MimeKit.MailboxAddress("", toEmail));
-            message.Subject = "Welcome to Tienda Inspire!";
+            message.Subject = "Bienvenido Tienda Inspire!";
             message.Body = new MimeKit.TextPart("plain")
             {            
-                Text = "Thank you for registering with Tienda Inspire. We're excited to have you on board!"
+                Text = "Gracias por hacerte una cuenta en Tienda Inspire!"
             };
 
             await client.SendAsync(message);
-            _logger.LogInformation("Welcome email sent to {ToEmail}", toEmail);
+            _logger.LogInformation("Email de bienvenida enviado a {ToEmail}", toEmail);
 
 
         }
-
-
-
 
 
     }

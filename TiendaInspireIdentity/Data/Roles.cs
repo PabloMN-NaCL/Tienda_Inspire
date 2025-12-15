@@ -1,6 +1,6 @@
 ﻿namespace TiendaInspireIdentity.Data
 {
-    //For seeding initial roles in database
+   
     public static class Roles
     {
         public const string Admin = nameof(Admin);
