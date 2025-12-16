@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderflowclase-dashboard
+  labels:
+    app: orderflowclase-dashboard
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orderflowclase-dashboard
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: orderflowclase-dashboard
+    spec:
+      containers:
+      - name: orderflowclase-dashboard
+        image: mcr.microsoft.com/dotnet/nightly/aspire-dashboard:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 18888
+        - name: otlp-grpc
+          containerPort: 18889
+        envFrom:
+        - configMapRef:
+            name: orderflowclase-dashboard-env
+      terminationGracePeriodSeconds: 180

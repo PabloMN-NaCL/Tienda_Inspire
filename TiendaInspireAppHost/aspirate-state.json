@@ -1,0 +1,41 @@
+{
+  "projectPath": ".",
+  "outputPath": "./k8s-output",
+  "containerImageTags": [
+    "latest"
+  ],
+  "imagePullPolicy": "IfNotPresent",
+  "containerBuilder": "docker",
+  "containerRepositoryPrefix": "n",
+  "outputFormat": "kustomize",
+  "skipFinalKustomizeGeneration": false,
+  "privateRegistryEmail": "aspir8@aka.ms",
+  "includeDashboard": true,
+  "useCustomNamespace": false,
+  "secrets": {
+    "salt": "l6jLHf1215oGCrGM",
+    "hash": "tiREXXv1RGoEMpEIazXcS5yMrNhBmSv\u002BwF2bmW8t3tk=",
+    "secrets": {
+      "postgres-password": {
+        "value": "l6jLHf1215oGCrGMYPxP1VN3niSkxJCN75ugO/M1PxH8CBRlAhixdpmpdS50aAxrDEg="
+      },
+      "redis-password": {
+        "value": "l6jLHf1215oGCrGMSBkU6AqasE3Hu6YBvhar0JMqCxbfWU8aLzfFcIevUhJ8Pgt1Mlk="
+      },
+      "rabbitmq-password": {
+        "value": "l6jLHf1215oGCrGMZidAAHxT2DHfUmNyUEWE04gUKSv0ZWQ2UDS8WKq9bQl\u002BXRNzHDM="
+      },
+      "postgres": {
+        "POSTGRES_PASSWORD": "l6jLHf1215oGCrGMYPxP1VN3niSkxJCN75ugO/M1PxH8CBRlAhixdpmpdS50aAxrDEg="
+      },
+      "servertienda": {},
+      "catalogdb": {},
+      "ordersdb": {},
+      "redis": {},
+      "rabbitmq": {},
+      "maildev": {},
+      "orderflowclase-dashboard": {}
+    }
+  },
+  "processAllComponents": true
+}

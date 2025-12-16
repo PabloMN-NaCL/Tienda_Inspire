@@ -1,0 +1,12 @@
+resources:
+- postgres
+- redis
+- rabbitmq
+- maildev
+- orderflowclase-dashboard
+- dashboard.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+

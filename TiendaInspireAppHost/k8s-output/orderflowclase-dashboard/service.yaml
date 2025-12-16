@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderflowclase-dashboard
+spec:
+  type: ClusterIP
+  selector:
+    app: orderflowclase-dashboard
+  ports:
+  - name: http
+    port: 18888
+    targetPort: 18888
+  - name: otlp-grpc
+    port: 18889
+    targetPort: 18889

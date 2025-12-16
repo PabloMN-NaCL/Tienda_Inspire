@@ -1,0 +1,237 @@
+services:
+  orderflowclase-dashboard:
+    image: "mcr.microsoft.com/dotnet/nightly/aspire-dashboard:latest"
+    expose:
+      - "18888"
+      - "18889"
+    networks:
+      - "aspire"
+    restart: "always"
+  postgres:
+    image: "docker.io/library/postgres:17.6"
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=scram-sha-256"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    expose:
+      - "5432"
+    volumes:
+      - type: "volume"
+        target: "/var/lib/postgresql/data"
+        source: "postgres"
+        read_only: false
+    networks:
+      - "aspire"
+  redis:
+    image: "docker.io/library/redis:8.2"
+    command:
+      - "-c"
+      - "redis-server --requirepass $$REDIS_PASSWORD --save 60 1"
+    entrypoint:
+      - "/bin/sh"
+    environment:
+      REDIS_PASSWORD: "${REDIS_PASSWORD}"
+    expose:
+      - "6379"
+    volumes:
+      - type: "volume"
+        target: "/data"
+        source: "redis-data-identity"
+        read_only: false
+    networks:
+      - "aspire"
+  rabbitmq:
+    image: "docker.io/library/rabbitmq:4.2-management"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASSWORD}"
+    expose:
+      - "5672"
+      - "15672"
+    volumes:
+      - type: "volume"
+        target: "/var/lib/rabbitmq"
+        source: "rabbitmq-data"
+        read_only: false
+    networks:
+      - "aspire"
+  maildev:
+    image: "maildev/maildev:latest"
+    expose:
+      - "1080"
+      - "1025"
+    networks:
+      - "aspire"
+  tiendainspireidentity:
+    image: "${TIENDAINSPIREIDENTITY_IMAGE}"
+    environment:
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: "in_memory"
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      HTTP_PORTS: "${TIENDAINSPIREIDENTITY_PORT}"
+      ConnectionStrings__rabbitmq: "amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672"
+      RABBITMQ_HOST: "rabbitmq"
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_USERNAME: "guest"
+      RABBITMQ_PASSWORD: "${RABBITMQ_PASSWORD}"
+      RABBITMQ_URI: "amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672"
+      ConnectionStrings__servertienda: "Host=postgres;Port=5432;Username=postgres;Password=${POSTGRES_PASSWORD};Database=servertienda"
+      SERVERTIENDA_HOST: "postgres"
+      SERVERTIENDA_PORT: "5432"
+      SERVERTIENDA_USERNAME: "postgres"
+      SERVERTIENDA_PASSWORD: "${POSTGRES_PASSWORD}"
+      SERVERTIENDA_URI: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/servertienda"
+      SERVERTIENDA_JDBCCONNECTIONSTRING: "jdbc:postgresql://postgres:5432/servertienda"
+      SERVERTIENDA_DATABASE: "servertienda"
+      ConnectionStrings__redis: "redis:6379,password=${REDIS_PASSWORD}"
+      REDIS_HOST: "redis"
+      REDIS_PORT: "6379"
+      REDIS_PASSWORD: "${REDIS_PASSWORD}"
+      REDIS_URI: "redis://:${REDIS_PASSWORD}@redis:6379"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://orderflowclase-dashboard:18889"
+      OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+      OTEL_SERVICE_NAME: "tiendainspireidentity"
+    expose:
+      - "${TIENDAINSPIREIDENTITY_PORT}"
+    depends_on:
+      postgres:
+        condition: "service_started"
+      rabbitmq:
+        condition: "service_started"
+    networks:
+      - "aspire"
+  tiendainspirecatalog:
+    image: "${TIENDAINSPIRECATALOG_IMAGE}"
+    environment:
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: "in_memory"
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      HTTP_PORTS: "${TIENDAINSPIRECATALOG_PORT}"
+      ConnectionStrings__catalogdb: "Host=postgres;Port=5432;Username=postgres;Password=${POSTGRES_PASSWORD};Database=catalogdb"
+      CATALOGDB_HOST: "postgres"
+      CATALOGDB_PORT: "5432"
+      CATALOGDB_USERNAME: "postgres"
+      CATALOGDB_PASSWORD: "${POSTGRES_PASSWORD}"
+      CATALOGDB_URI: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/catalogdb"
+      CATALOGDB_JDBCCONNECTIONSTRING: "jdbc:postgresql://postgres:5432/catalogdb"
+      CATALOGDB_DATABASE: "catalogdb"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://orderflowclase-dashboard:18889"
+      OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+      OTEL_SERVICE_NAME: "tiendainspirecatalog"
+    expose:
+      - "${TIENDAINSPIRECATALOG_PORT}"
+    depends_on:
+      postgres:
+        condition: "service_started"
+    networks:
+      - "aspire"
+  tiendainspireorders:
+    image: "${TIENDAINSPIREORDERS_IMAGE}"
+    environment:
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: "in_memory"
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      HTTP_PORTS: "${TIENDAINSPIREORDERS_PORT}"
+      ConnectionStrings__ordersdb: "Host=postgres;Port=5432;Username=postgres;Password=${POSTGRES_PASSWORD};Database=ordersdb"
+      ORDERSDB_HOST: "postgres"
+      ORDERSDB_PORT: "5432"
+      ORDERSDB_USERNAME: "postgres"
+      ORDERSDB_PASSWORD: "${POSTGRES_PASSWORD}"
+      ORDERSDB_URI: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/ordersdb"
+      ORDERSDB_JDBCCONNECTIONSTRING: "jdbc:postgresql://postgres:5432/ordersdb"
+      ORDERSDB_DATABASE: "ordersdb"
+      ConnectionStrings__rabbitmq: "amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672"
+      RABBITMQ_HOST: "rabbitmq"
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_USERNAME: "guest"
+      RABBITMQ_PASSWORD: "${RABBITMQ_PASSWORD}"
+      RABBITMQ_URI: "amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672"
+      TIENDAINSPIRECATALOG_HTTP: "http://tiendainspirecatalog:${TIENDAINSPIRECATALOG_PORT}"
+      services__tiendainspirecatalog__http__0: "http://tiendainspirecatalog:${TIENDAINSPIRECATALOG_PORT}"
+      TIENDAINSPIRECATALOG_HTTPS: "https://tiendainspirecatalog:${TIENDAINSPIRECATALOG_PORT}"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://orderflowclase-dashboard:18889"
+      OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+      OTEL_SERVICE_NAME: "tiendainspireorders"
+    expose:
+      - "${TIENDAINSPIREORDERS_PORT}"
+    depends_on:
+      postgres:
+        condition: "service_started"
+      rabbitmq:
+        condition: "service_started"
+    networks:
+      - "aspire"
+  tiendainspire-apigateway:
+    image: "${TIENDAINSPIRE_APIGATEWAY_IMAGE}"
+    environment:
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: "in_memory"
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      HTTP_PORTS: "${TIENDAINSPIRE_APIGATEWAY_PORT}"
+      ConnectionStrings__redis: "redis:6379,password=${REDIS_PASSWORD}"
+      REDIS_HOST: "redis"
+      REDIS_PORT: "6379"
+      REDIS_PASSWORD: "${REDIS_PASSWORD}"
+      REDIS_URI: "redis://:${REDIS_PASSWORD}@redis:6379"
+      TIENDAINSPIREIDENTITY_HTTP: "http://tiendainspireidentity:${TIENDAINSPIREIDENTITY_PORT}"
+      services__tiendainspireidentity__http__0: "http://tiendainspireidentity:${TIENDAINSPIREIDENTITY_PORT}"
+      TIENDAINSPIREIDENTITY_HTTPS: "https://tiendainspireidentity:${TIENDAINSPIREIDENTITY_PORT}"
+      TIENDAINSPIRECATALOG_HTTP: "http://tiendainspirecatalog:${TIENDAINSPIRECATALOG_PORT}"
+      services__tiendainspirecatalog__http__0: "http://tiendainspirecatalog:${TIENDAINSPIRECATALOG_PORT}"
+      TIENDAINSPIRECATALOG_HTTPS: "https://tiendainspirecatalog:${TIENDAINSPIRECATALOG_PORT}"
+      TIENDAINSPIREORDERS_HTTP: "http://tiendainspireorders:${TIENDAINSPIREORDERS_PORT}"
+      services__tiendainspireorders__http__0: "http://tiendainspireorders:${TIENDAINSPIREORDERS_PORT}"
+      TIENDAINSPIREORDERS_HTTPS: "https://tiendainspireorders:${TIENDAINSPIREORDERS_PORT}"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://orderflowclase-dashboard:18889"
+      OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+      OTEL_SERVICE_NAME: "tiendainspire-apigateway"
+    expose:
+      - "${TIENDAINSPIRE_APIGATEWAY_PORT}"
+    depends_on:
+      redis:
+        condition: "service_started"
+      tiendainspireidentity:
+        condition: "service_started"
+      tiendainspirecatalog:
+        condition: "service_started"
+      tiendainspireorders:
+        condition: "service_started"
+    networks:
+      - "aspire"
+  tiendinspire-notificaciones:
+    image: "${TIENDINSPIRE_NOTIFICACIONES_IMAGE}"
+    environment:
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: "in_memory"
+      ConnectionStrings__rabbitmq: "amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672"
+      RABBITMQ_HOST: "rabbitmq"
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_USERNAME: "guest"
+      RABBITMQ_PASSWORD: "${RABBITMQ_PASSWORD}"
+      RABBITMQ_URI: "amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672"
+      Email__SmtpHost: "maildev"
+      Email__SmtpPort: "1025"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://orderflowclase-dashboard:18889"
+      OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+      OTEL_SERVICE_NAME: "tiendinspire-notificaciones"
+    depends_on:
+      rabbitmq:
+        condition: "service_started"
+    networks:
+      - "aspire"
+networks:
+  aspire:
+    driver: "bridge"
+volumes:
+  postgres:
+    driver: "local"
+  redis-data-identity:
+    driver: "local"
+  rabbitmq-data:
+    driver: "local"

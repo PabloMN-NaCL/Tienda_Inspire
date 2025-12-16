@@ -33,25 +33,7 @@ builder.AddNpgsqlDbContext<ApplicationDbContext>("servertienda");
 
 //Generate OpenApi services
 builder.Services.AddOpenApi();
-//builder.Services.AddOpenApi("v1", options =>
-//{
-//    options.ConfigureDocumentInfo(
-//        "TiendaInspire Identity API V1",
-//        "v1",
-//        "Authentication API using Minimal APIs with JWT Bearer authentication");
-//    options.AddJwtBearerSecurity();
-//    options.FilterByApiVersion("v1");
-//});
 
-//builder.Services.AddOpenApi("v2", options =>
-//{
-//    options.ConfigureDocumentInfo(
-//        "TiendaInspire Identity API V2",
-//        "v2",
-//        "Authentication API using Controllers with JWT Bearer authentication");
-//    options.AddJwtBearerSecurity();
-//    options.FilterByApiVersion("v2");
-//});
 
 //Habilitar versionado
 builder.Services.AddApiVersioning(options =>

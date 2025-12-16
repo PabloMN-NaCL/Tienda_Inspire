@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace TiendaInspireIdentity.Controllers
 {
-    [ApiVersion(2)]
+    [ApiVersion(1)]
     [ApiController]
     [Authorize(Roles = "Admin")] 
     [Route("/api/v{version:apiVersion}/[controller]")]

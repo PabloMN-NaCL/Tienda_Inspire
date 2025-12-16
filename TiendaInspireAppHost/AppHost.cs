@@ -2,6 +2,8 @@ using System.Security.Principal;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
+builder.AddDockerComposeEnvironment("orderflowclase");
+
 
 //Pgadmin
 var database = builder.AddPostgres("postgres")
